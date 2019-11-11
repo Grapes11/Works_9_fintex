@@ -12,6 +12,7 @@ public final class Main {
 	stringBilder.getArrayString();
 	stringBilder.viewList();
 	stringBilder.getPercent();
-	stringBilder.viewListPercent();
+	stringBilder.viewPercent();
+
     }
 }

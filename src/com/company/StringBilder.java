@@ -1,9 +1,9 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class StringBilder {
     /**
@@ -24,27 +24,27 @@ class StringBilder {
      * Массив, в котором будут
      * располагаться сгенерированные числа.
      */
-    private List<String> list = new ArrayList<>();
+    private List<String> list = Stream.generate(String::new)
+            .limit(AMOUNT)
+            .collect(Collectors.toList());
     /**
      * Массив, в котором будут
      * располагаться проценты, которые
      * говорят о том сколько цифра из массива
      * List встречается в строке.
      */
-    private List<Float> list2;
-
+    private List<Float> listPercent;
     void getArrayString() {
-        Random random = new Random();
-        for (int i = 0; i < AMOUNT; i++) {
-            list.add(String.valueOf(random.nextInt(MAX)));
-        }
+        list = list.stream()
+                .map(s -> s = String.valueOf(new Random().nextInt(MAX)))
+                .collect(Collectors.toList());
     }
 
     void viewList() {
         list.forEach(s -> System.out.print(" " + s));
     }
     void getPercent() {
-        list2 = list.stream().map(Integer::parseInt).sorted().distinct()
+        listPercent = list.stream().map(Integer::parseInt).sorted().distinct()
                 .map(s -> {
                     float x = list.stream()
                             .filter(s1 -> s1.equals(String.valueOf(s))).count();
@@ -52,13 +52,13 @@ class StringBilder {
                 .collect(Collectors.toList());
     }
 
-    void viewListPercent() {
+    void viewPercent() {
         System.out.println(" ");
         List<Integer> list1 = list.stream().map(Integer::parseInt)
                 .sorted().distinct().collect(Collectors.toList());
-      for (int i = 0; i < list1.size(); i++) {
-          System.out.println(list1.get(i)
-                  + "-" + list2.get(i) + " процентов");
-      }
+        for (int i = 0; i < list1.size(); i++) {
+            System.out.println(list1.get(i)
+                  + "-" + listPercent.get(i) + " процентов");
+        }
     }
 }
